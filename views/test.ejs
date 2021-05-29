@@ -1,0 +1,237 @@
+<%- include('partials/header') -%>
+<form>
+    <p class="error">Please fill all the fields</p>
+    <div class="container DataForm">
+        
+        <div class="leftSide">
+            <div class="textField">
+                <input id="fname" type="text" placeholder="First Name" required>
+            </div>
+            <div class="textField">
+                <input id="mname" type="text" placeholder="Middle Name" required>
+            </div>
+            <div class="textField">
+                <input id="lname" type="text" placeholder="Last Name" required> 
+            </div>
+            <div class="textField">
+                <input id="address" type="text" placeholder="Address" required>
+            </div>
+            <div class="textField">
+                <select class="selectpicker countrypicker" data-flag="true" id="country" required></select>
+            </div>
+        </div>
+        <div class="rightSide">
+          <div class="textField state">
+                <%- include('partials/statepicker') -%>
+                <input type="text" class="stateText" id="state" placeholder="State" required> 
+          </div>
+          <div class="textField">
+              <input id="zip" type="text" placeholder="Zipcode" required>
+          </div>
+          <div class="textField">
+              <input id="email" type="email" placeholder="Email" required>
+          </div>
+          <div class="textField">
+              <input id="phone" type="text" placeholder="Phone" required>
+          </div>
+          <div class="textField hw">
+              <input id="height" class="h" type="text" placeholder="Height:" required>
+              <input id="weight" class="w" type="text" placeholder="Weight" required>
+          </div>
+          <button type="button" class="saveButton">
+              Save
+          </button>
+          
+        </div>
+        
+    </div>
+</form>
+
+<div class="spacer"></div>
+<form action="/form/save-details" method="POST">
+    <div class="container DataForm form-confirm">
+        <div class="leftSide">
+            <div class="textField">
+                <input id="fname2" type="text" name="fname" readonly value="">
+            </div>
+            <div class="textField">
+                <input id="mname2" type="text" name="mname" readonly value="">
+            </div>
+            <div class="textField">
+                <input id="lname2" type="text" name="lname" readonly value="">
+            </div>
+            
+        </div>
+        <div class="rightSide">
+            <div class="textField">
+                <input id="address2" type="text" name="address" readonly value="">
+            </div>
+            
+            <div class="textField hw">
+                <input id="email2" class="h" type="Email" name="email" readonly value="">
+                <input id="phone2" class="w" type="text" name="phone" readonly value="">
+            </div>
+          <div class="textField hw">
+              <input id="height2" class="h" type="text" name="height" readonly value="">
+              <input  id="weight2" class="w" type="text" name="weight" readonly value="">
+          </div>
+          <button type="submit">
+            Submit
+        </button>
+        </div>
+        
+    </div>
+</form>
+
+<!-- <script>
+    $('.countrypicker').countrypicker();
+    $('.bootstrap-select button').removeClass("dropdown-toggle");
+    $('#country').change(function(){
+        if($(this).children('option:selected').val() == "US"){
+            $('.stateText').hide();
+            $('.statepicker').show();
+        }else{
+            $('.statepicker').hide();
+            $('.stateText').show();
+        }
+    });
+    function isEmail(email){
+        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+           return false;
+        }else{
+           return true;
+        }
+    }
+    function isHeight(height){
+        var regex = /^[0-9]+ ?(\'|ft|cm|meters|feet|in|inches|\")?( *[1-9]+ ?(\"|inches|in|cm)?)?$/;
+        if(!regex.test(height)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function isWeight(weight){
+        var regex = /^(0|[1-9]\d*)(,\d+)?$/;
+        if(!regex.test(weight)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function isPhone(phone){
+        var regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        if(!regex.test(phone)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function isZip(zipcode){
+        var regex = /^\d{5}$|^\d{5}-\d{4}$/;
+        if(!regex.test(zipcode)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function isEmpty(mat){
+        if(mat == '') return false;
+        else return true;
+    }
+    function isAllFilled(list){
+        list.forEach(element => {
+            if(!isEmpty(element)){
+                $('#'+element).addClass("redoutline");
+            }else{
+                $('#'+ element).removeClass("redoutline");
+            }
+        });
+    }
+    $('.saveButton').click(function(){
+       var fname = $('#fname').val();
+       var mname = $('#mname').val();
+       var lname = $('#lname').val();
+       var zip = $('#zip').val();
+       var state = $('#country').children('option:selected').val() == 'US' ? $('.statepicker').children('option:selected').html() : $('.stateText').val();
+       var address = $('#address').val(); 
+       var fulladdress = address + ',' + state + ',' + $('#country').children('option:selected').html() + ',' + zip;
+       var Email = $('#email').val();
+       var phone = $('#phone').val();
+       var height = $('#height').val();
+       var weight = $('#weight').val();
+       if(!isEmpty(fname)) $("#fname").addClass("redoutline");
+       else $("#fname").removeClass("redoutline")
+       if(!isEmpty(mname)) $("#mname").addClass("redoutline");
+       else $("#mname").removeClass("redoutline")
+       if(!isEmpty(lname)) $("#lname").addClass("redoutline");
+       else $("#lname").removeClass("redoutline")
+       if(!isEmpty(address)) $("#address").addClass("redoutline");
+       else $("#address").removeClass("redoutline")
+       if(!isEmpty(state)) $(".stateText").addClass("redoutline");
+       else $(".stateText").removeClass("redoutline")
+       if(!isEmpty(zip)) $("#zip").addClass("redoutline");
+       else $("#zip").removeClass("redoutline")
+       if(!isEmpty(Email)) $("#email").addClass("redoutline");
+       else {
+           if(!isEmail(Email)){
+               $('#email').addClass("redoutline");
+               $('.error').text("Enter a Valid Email Address");
+           }
+           else{
+               $("#email").removeClass("redoutline")
+           }  
+       }
+       if(!isEmpty(phone)) $("#phone").addClass("redoutline");
+       else {
+           if(!isPhone(phone)){
+               $('#phone').addClass("redoutline");
+               $('.error').text("Enter a Valid Phone Number");
+           }
+           else{
+               $("#phone").removeClass("redoutline")
+           }
+           
+       }
+       if(!isEmpty(height)) $("#height").addClass("redoutline");
+       else {
+           if(!isHeight(height)){
+               $('#height').addClass("redoutline");
+               $('.error').text("Correct Format is Feet'inches\",Example: 5'6\"");
+           }
+           else{
+               $("#height").removeClass("redoutline")
+           }
+           
+       }
+       if(!isEmpty(weight)) $("#weight").addClass("redoutline");
+       else{
+           if(!isWeight(weight)){
+               $('#weight').addClass('redoutline');
+               $('.error').text("Enter a valid Weight");
+           }else{
+               $("#weight").removeClass("redoutline")
+           }
+       } 
+       if(isEmpty(fname) && isEmpty(mname) && isEmpty(lname) && isEmpty(address) && isEmpty(state) && isEmpty(Email) && isEmpty(phone) && isEmpty(zip) && isEmpty(height) && isEmpty(weight)){
+           if(isEmail(Email) && isPhone(phone)  && isHeight(height) && isWeight(weight)){
+               $('.error').hide();
+            $('.form-confirm').css("display","flex");
+            $('#fname2').val("First name: " + fname);
+            $('#mname2').val("Middle Name: " + mname);
+            $('#lname2').val("Last Name: " + lname);
+            $('#address2').val("Address: " + fulladdress);
+            $('#email2').val("Email: " + Email);
+            $('#phone2').val("Phone: " + phone);
+            $('#height2').val("Height: " + height + " feet");
+            $('#weight2').val("Weight: " + weight + " Kgs");
+           }
+       }else{
+           $('.error').show();
+           $('.error').text("Please fill all the details");
+       }
+    });
+</script>
+     -->
+<%- include('scripts') -%>
+<%- include('partials/footer') -%>

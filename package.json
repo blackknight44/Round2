@@ -1,0 +1,30 @@
+{
+  "name": "vita2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "mocha --recursive --exit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.1",
+    "bootstrap-select-country": "^4.2.0",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "jquery": "^3.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^8.4.0",
+    "mockgoose": "^8.0.4",
+    "mongoose": "^5.12.11",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  }
+}
